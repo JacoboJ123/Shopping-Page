@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Shopping Page</title>
+    <!-- Include Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+
+<body>
+    <div class="container mt-4">
+        <h1>Shopping Page</h1>
+        <form action="confirm.php" method="GET">
+            <div class="mb-3">
+                <label for="name" class="form-label">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="address" class="form-label">Address:</label>
+                <input type="text" id="address" name="address" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="zip" class="form-label">Zip:</label>
+                <input type="text" id="zip" name="zip" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label for="state" class="form-label">State:</label>
+                <input type="text" id="state" name="state" class="form-control" required>
+            </div>
+
+            <h3>Items:</h3>
+            <div class="form-check mb-2">
+                <input type="checkbox" id="keyboard" name="keyboard" value="keyboard" class="form-check-input" onchange="updateCostBeforeTax()">
+                <label for="keyboard" class="form-check-label">Keyboard ($29.95)</label>
+                <input type="number" id="keyboardQty" name="keyboardQty" min="0" value="0" class="form-control d-inline-block ml-2" style="width: 60px;" onchange="updateCostBeforeTax()">
+            </div>
+
+            <div class="form-check mb-2">
+                <input type="checkbox" id="mouse" name="mouse" value="mouse" class="form-check-input" onchange="updateCostBeforeTax()">
+                <label for="mouse" class="form-check-label">Mouse ($9.99)</label>
+                <input type="number" id="mouseQty" name="mouseQty" min="0" value="0" class="form-control d-inline-block ml-2" style="width: 60px;" onchange="updateCostBeforeTax()">
+            </div>
+
+            <div class="form-check mb-2">
+                <input type="checkbox" id="laptopCase" name="laptopCase" value="laptopCase" class="form-check-input" onchange="updateCostBeforeTax()">
+                <label for="laptopCase" class="form-check-label">Laptop Case ($19.99)</label>
+                <input type="number" id="laptopCaseQty" name="laptopCaseQty" min="0" value="0" class="form-control d-inline-block ml-2" style="width: 60px;" onchange="updateCostBeforeTax()">
+            </div>
+
+            <div class="form-check mb-2">
+                <input type="checkbox" id="backpack" name="backpack" value="backpack" class="form-check-input" onchange="updateCostBeforeTax()">
+                <label for="backpack" class="form-check-label">Backpack ($14.95)</label>
+                <input type="number" id="backpackQty" name="backpackQty" min="0" value="0" class="form-control d-inline-block ml-2" style="width: 60px;" onchange="updateCostBeforeTax()">
+            </div>
+
+            <div class="mb-3">
+                <label for="costBeforeTax" class="form-label">Cost of Goods Before Tax:</label>
+                <input type="text" id="costBeforeTax" name="costBeforeTax" class="form-control" readonly>
+            </div>
+
+            <button type="button" class="btn btn-primary" onclick="calculateTotal()">Calculate Sales Tax</button>
+
+            <div class="mb-3 mt-3">
+                <label for="totalCost" class="form-label">Total Cost After Tax:</label>
+                <input type="text" id="totalCost" name="totalCost" class="form-control" readonly>
+            </div>
+
+            <div class="mb-3">
+                <label for="deliveryDate" class="form-label">Estimated Delivery Date:</label>
+                <input type="text" id="deliveryDate" name="deliveryDate" class="form-control" readonly>
+            </div>
+
+            <input type="submit" value="Submit" class="btn btn-success">
+        </form>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+    <!-- JavaScript functions for calculating cost before tax, total cost, and estimated delivery date -->
+    <script>
+        function updateCostBeforeTax() {
+            const keyboardChecked = document.getElementById('keyboard').checked;
+            const mouseChecked = document.getElementById('mouse').checked;
+            const laptopCaseChecked = document.getElementById('laptopCase').checked;
+            const backpackChecked = document.getElementById('backpack').checked;
+
+            const keyboardQty = parseInt(document.getElementById('keyboardQty').value);
+            const mouseQty = parseInt(document.getElementById('mouseQty').value);
+            const laptopCaseQty = parseInt(document.getElementById('laptopCaseQty').value);
+            const backpackQty = parseInt(document.getElementById('backpackQty').value);
+
+            const keyboardPrice = 29.95;
+            const mousePrice = 9.99;
+            const laptopCasePrice = 19.99;
+            const backpackPrice = 14.95;
+
+            let totalCost = 0;
+            if(keyboardChecked) totalCost += keyboardPrice * keyboardQty;
+            if(mouseChecked) totalCost += mousePrice * mouseQty;
+            if(laptopCaseChecked) totalCost += laptopCasePrice * laptopCaseQty;
+            if(backpackChecked) totalCost += backpackPrice * backpackQty;
+
+            document.getElementById('costBeforeTax').value = totalCost.toFixed(2);
+        }
+
+        function calculateTotal() {
+            const keyboardChecked = document.getElementById('keyboard').checked;
+            const mouseChecked = document.getElementById('mouse').checked;
+            const laptopCaseChecked = document.getElementById('laptopCase').checked;
+            const backpackChecked = document.getElementById('backpack').checked;
+
+            const keyboardQty = parseInt(document.getElementById('keyboardQty').value);
+            const mouseQty = parseInt(document.getElementById('mouseQty').value);
+            const laptopCaseQty = parseInt(document.getElementById('laptopCaseQty').value);
+            const backpackQty = parseInt(document.getElementById('backpackQty').value);
+
+            const keyboardPrice = 29.95;
+            const mousePrice = 9.99;
+            const laptopCasePrice = 19.99;
+            const backpackPrice = 14.95;
+
+            let totalCost = 0;
+            if(keyboardChecked) totalCost += keyboardPrice * keyboardQty;
+            if(mouseChecked) totalCost += mousePrice * mouseQty;
+            if(laptopCaseChecked) totalCost += laptopCasePrice * laptopCaseQty;
+            if(backpackChecked) totalCost += backpackPrice * backpackQty;
+
+            const salesTax = 0.075 * totalCost;
+            const totalWithTax = totalCost + salesTax;
+            document.getElementById('totalCost').value = totalWithTax.toFixed(2);
+            const today = new Date();
+            let estimatedDeliveryDate;
+
+            if(totalWithTax >= 30){
+                today.setDate(today.getDate() + 2);
+                estimatedDeliveryDate = today;
+            } 
+            else{
+                const randomDays = Math.floor(Math.random() * 3) + 3;
+                today.setDate(today.getDate() + randomDays);
+                estimatedDeliveryDate = today;
+            }
+
+            const deliveryDate = (estimatedDeliveryDate.getMonth() + 1).toString().padStart(2, '0') + '/' + estimatedDeliveryDate.getDate().toString().padStart(2, '0') + '/' + estimatedDeliveryDate.getFullYear();
+            document.getElementById('deliveryDate').value = deliveryDate;
+        }
+    </script>
+</body>
+
+</html>
